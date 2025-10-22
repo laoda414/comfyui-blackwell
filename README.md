@@ -35,7 +35,7 @@ This Docker image provides a ready-to-use ComfyUI environment specifically confi
 ### Running the Container
 
 ```bash
-docker run -it --gpus all -p 8188:8188 your-dockerhub-username/comfyui-blackwell:latest
+docker run -it --gpus all -p 8188:8188 dinoanderson777/comfyui-blackwell:latest
 ```
 
 Once running, access ComfyUI at: `http://localhost:8188`
@@ -44,7 +44,7 @@ Once running, access ComfyUI at: `http://localhost:8188`
 
 1. Upload this image to Docker Hub (see Build Instructions below)
 2. In RunPod, select "Custom Docker Image"
-3. Enter your image name: `your-dockerhub-username/comfyui-blackwell:latest`
+3. Enter your image name: `dinoanderson777/comfyui-blackwell:latest`
 4. Configure ports: expose port 8188
 5. Deploy and access via RunPod's provided URL
 
@@ -59,14 +59,14 @@ docker build -t comfyui-blackwell:latest .
 ### Tag for Docker Hub
 
 ```bash
-docker tag comfyui-blackwell:latest your-dockerhub-username/comfyui-blackwell:latest
+docker tag comfyui-blackwell:latest dinoanderson777/comfyui-blackwell:latest
 ```
 
 ### Push to Docker Hub
 
 ```bash
 docker login
-docker push your-dockerhub-username/comfyui-blackwell:latest
+docker push dinoanderson777/comfyui-blackwell:latest
 ```
 
 ## Environment Variables
