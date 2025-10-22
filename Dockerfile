@@ -84,4 +84,14 @@ python3 main.py --listen 0.0.0.0 --disable-xformers "$@"\n\
 
 # Start JupyterLab by default (ComfyUI can be started manually from terminal)
 # Note: --disable-xformers is required as Flash Attention is not compatible with Blackwell
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=", "--NotebookApp.password="]
+# CORS settings allow access from Cloud Shell Web Preview and RunPod
+CMD ["jupyter", "lab", \
+     "--ip=0.0.0.0", \
+     "--port=8888", \
+     "--no-browser", \
+     "--allow-root", \
+     "--NotebookApp.token=", \
+     "--NotebookApp.password=", \
+     "--ServerApp.allow_origin=*", \
+     "--ServerApp.allow_remote_access=True", \
+     "--ServerApp.disable_check_xsrf=True"]
