@@ -56,12 +56,21 @@ RUN pip install --no-cache-dir \
     matplotlib \
     evalidate
 
-# Install JupyterLab
-RUN pip install --no-cache-dir jupyterlab
+# Install JupyterLab and ipykernel
+RUN pip install --no-cache-dir jupyterlab ipykernel ipython
+
+# Register Python kernel with Jupyter
+RUN python3 -m ipykernel install --user --name python3 --display-name "Python 3"
+
+# Verify kernel installation
+RUN jupyter kernelspec list
 
 # Configure JupyterLab terminal to use bash
 RUN mkdir -p /root/.jupyter && \
     echo "c.ServerApp.terminado_settings = {'shell_command': ['/bin/bash']}" > /root/.jupyter/jupyter_lab_config.py
+
+# Verify bash is accessible
+RUN which bash && bash --version
 
 # Expose ports for ComfyUI and JupyterLab
 EXPOSE 8188
