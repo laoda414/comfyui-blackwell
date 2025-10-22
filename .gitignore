@@ -1,0 +1,29 @@
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Build artifacts
+*.tar
+*.tar.gz
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+
+# Test files
+test/
+scratch/
