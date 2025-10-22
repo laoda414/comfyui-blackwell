@@ -37,6 +37,9 @@ WORKDIR /app
 # Clone ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI
 
+# Clone ComfyUI Manager into custom_nodes
+RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git /app/ComfyUI/custom_nodes/ComfyUI-Manager
+
 # Install ComfyUI requirements
 WORKDIR /app/ComfyUI
 RUN pip install --no-cache-dir -r requirements.txt
@@ -49,9 +52,19 @@ RUN pip install --no-cache-dir \
     matplotlib \
     evalidate
 
-# Expose ComfyUI port
-EXPOSE 8188
+# Install JupyterLab
+RUN pip install --no-cache-dir jupyterlab
 
-# Start ComfyUI with Blackwell-compatible settings
+# Expose ports for ComfyUI and JupyterLab
+EXPOSE 8188
+EXPOSE 8888
+
+# Create ComfyUI startup helper script
+RUN echo '#!/bin/bash\n\
+cd /app/ComfyUI\n\
+python3 main.py --listen 0.0.0.0 --disable-xformers "$@"\n\
+' > /app/start_comfyui.sh && chmod +x /app/start_comfyui.sh
+
+# Start JupyterLab by default (ComfyUI can be started manually from terminal)
 # Note: --disable-xformers is required as Flash Attention is not compatible with Blackwell
-CMD ["python3", "main.py", "--listen", "0.0.0.0", "--disable-xformers"]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=", "--NotebookApp.password="]
