@@ -10,6 +10,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    bash \
     python3.11 \
     python3.11-venv \
     python3-pip \
@@ -18,6 +19,9 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
+
+# Set shell environment variable for JupyterLab terminal
+ENV SHELL=/bin/bash
 
 # Set Python 3.11 as default
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
@@ -54,6 +58,10 @@ RUN pip install --no-cache-dir \
 
 # Install JupyterLab
 RUN pip install --no-cache-dir jupyterlab
+
+# Configure JupyterLab terminal to use bash
+RUN mkdir -p /root/.jupyter && \
+    echo "c.ServerApp.terminado_settings = {'shell_command': ['/bin/bash']}" > /root/.jupyter/jupyter_lab_config.py
 
 # Expose ports for ComfyUI and JupyterLab
 EXPOSE 8188
