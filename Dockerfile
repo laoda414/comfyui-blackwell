@@ -1,6 +1,6 @@
 # ComfyUI Docker Image for Blackwell GPU (NVIDIA RTX Pro 6000)
-# Base image with CUDA 12.8 and cuDNN 9 for Blackwell architecture support
-FROM nvidia/cuda:12.8.0-cudnn9-devel-ubuntu24.04
+# Base image with CUDA 12.8.1 and cuDNN for Blackwell architecture support
+FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu22.04
 
 # Set environment variables for Blackwell optimization
 ENV PYTHONNOUSERSITE=1
@@ -10,8 +10,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    python3.12 \
-    python3.12-venv \
+    python3.11 \
+    python3.11-venv \
     python3-pip \
     git \
     wget \
@@ -19,9 +19,9 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Set Python 3.12 as default
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1
+# Set Python 3.11 as default
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
 
 # Upgrade pip
 RUN python3 -m pip install --upgrade pip
